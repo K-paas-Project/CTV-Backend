@@ -6,7 +6,7 @@ import io.jsonwebtoken.*;
 import java.time.Duration;
 import java.util.Date;
 
-public class JwtTokenFilter {
+public class JwtTokenUtil {
 
     private static final long expiredTimeMs = 1000 * 60 * 60;
 
