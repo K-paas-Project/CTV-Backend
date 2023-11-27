@@ -15,11 +15,13 @@ public interface UserService {
 
     ResponseEntity<BaseResponse> login(UserLoginRequest userLoginRequest);
 
+    UserEntity getUserByUserAccount(String userAccount);
+
 
     default UserEntity reqToEntity(UserJoinRequest request){
 
         return UserEntity.builder()
-                .userName(request.userAccount())
+                .userAccount(request.userAccount())
                 .password(request.password())
                 .userName(request.userName())
                 .organization(request.organization())

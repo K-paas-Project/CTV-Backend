@@ -7,6 +7,6 @@ public class AuthErrorNotFoundException extends BusinessException {
     public static final AuthErrorNotFoundException EXCEPTION = new AuthErrorNotFoundException();
 
     private AuthErrorNotFoundException(){
-        super(AuthError.AUTH_ERROR_NOT_FOUND_ID_AND_PASSWORD);
+        super(AuthError.AUTH_ERROR_NOT_FOUND_ID_OR_PASSWORD);
     }
 }

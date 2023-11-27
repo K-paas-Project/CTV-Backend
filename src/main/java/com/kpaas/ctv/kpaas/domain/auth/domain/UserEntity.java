@@ -15,19 +15,19 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String userAccount;
 
-    @Column
+    @Column(nullable = false)
     private String password;
 
-    @Column
+    @Column(nullable = false)
     private String userName;
 
-    @Column
+    @Column(nullable = false)
     private String organization;
 
-    @Column
+    @Column(nullable = false)
     private Role role;
 
     @Builder

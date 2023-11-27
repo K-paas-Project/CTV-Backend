@@ -36,7 +36,7 @@ public class HttpSecurityConfig {
                 .sessionManagement(sessionManagement ->
                     sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-                .addFilterBefore(new JwtTokenFilter(userService, secretKey), UsernamePasswordAuthenticationFilter.class));
+                .addFilterBefore(new JwtTokenFilter(userService, secretKey), UsernamePasswordAuthenticationFilter.class);
         return  httpSecurity.build();
     }
 }
