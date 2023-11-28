@@ -37,21 +37,30 @@ public class ReportEntity {
     private String reportStatus;
 
     @Column
+    private String location;
+
+    @Column
     private String imgUrl;
 
     @Column
     private LocalDateTime date;
 
     @Builder
-    public ReportEntity(String category, String title, String content, String reportUserName, String reportOrganization, String imgUrl) {
+    public ReportEntity(String category, String title, String content, String reportUserName, String reportOrganization, String location,String imgUrl) {
         this.category = category;
         this.title = title;
         this.content = content;
         this.reportUserName = reportUserName;
         this.reportOrganization = reportOrganization;
+        this.location = location;
         this.reportStatus = "접수됨";
         this.date = LocalDateTime.now();
         this.imgUrl = imgUrl;
+    }
+
+    public void reportFix(String reportOrganization, String reportStatus){
+        this.reportOrganization = reportOrganization;
+        this.reportStatus = reportStatus;
     }
 
     public void changeReportStatus(String reportStatus){

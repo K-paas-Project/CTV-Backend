@@ -1,5 +1,6 @@
 package com.kpaas.ctv.kpaas.domain.report.presentation;
 
+import com.kpaas.ctv.kpaas.domain.report.dto.req.ReportFixRequest;
 import com.kpaas.ctv.kpaas.domain.report.dto.req.ReportRequest;
 import com.kpaas.ctv.kpaas.domain.report.service.ReportService;
 import com.kpaas.ctv.kpaas.global.common.dto.BaseResponse;
@@ -21,6 +22,28 @@ public class ReportController {
         return reportService.reportCreate(request, multipartFile, authentication);
     }
 
+    @GetMapping("/report/my")
+    public ResponseEntity<BaseResponse> myReport(Authentication authentication){
+        return reportService.myReport(authentication);
+    }
 
 
+    @GetMapping("/report/{id}")
+    public ResponseEntity<BaseResponse> ReportRead(@PathVariable("id") Long id){
+        return reportService.reportRead(id);
+    }
+
+    @GetMapping("/report/all")
+    public ResponseEntity<BaseResponse> allReport(){
+        return reportService.allReport();
+    }
+
+
+
+
+    @PatchMapping("/report/fix")
+    public ResponseEntity<BaseResponse> reportFix(@RequestBody ReportFixRequest request, Authentication authentication){
+        return reportService.reportFix(request, authentication);
+    }
 }
+

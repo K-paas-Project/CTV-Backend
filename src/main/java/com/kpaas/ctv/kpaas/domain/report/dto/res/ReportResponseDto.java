@@ -1,11 +1,12 @@
-package com.kpaas.ctv.kpaas.domain.report.dto.req;
+package com.kpaas.ctv.kpaas.domain.report.dto.res;
 
 import lombok.Builder;
 
 import java.time.LocalDateTime;
 
 @Builder
-public record ReportDto(
+public record ReportResponseDto(
+        Long id,
         String category,
         String title,
         String content,

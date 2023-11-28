@@ -10,6 +10,10 @@ public class ReportException extends BusinessException {
     private static final ReportException REPORT_EXCEPTION = new ReportException(ReportError.REPORT_EXCEPTION);
     private static final ReportException IMAGE_NOT_IN_FILE = new ReportException(ReportError.IMAGE_NOT_IN);
 
+    private static final ReportException REPORT_NOT_FOUND_EXCEPTION = new ReportException(ReportError.REPORT_NOT_FOUND_EXCEPTION);
+
+    private static final ReportException NO_ROLE_EXCEPTION = new ReportException(ReportError.NO_ROLE_EXCEPTION);
+
     public ReportException(ReportError error) {
         super(error);
     }
@@ -24,5 +28,13 @@ public class ReportException extends BusinessException {
 
     public static ReportException notImageInFile(){
         return IMAGE_NOT_IN_FILE;
+    }
+
+    public static ReportException noRoleException(){
+        return NO_ROLE_EXCEPTION;
+    }
+
+    public static ReportException notFoundReport(){
+        return REPORT_NOT_FOUND_EXCEPTION;
     }
 }

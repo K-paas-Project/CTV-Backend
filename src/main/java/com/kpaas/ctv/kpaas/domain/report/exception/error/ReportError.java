@@ -10,7 +10,9 @@ import org.springframework.http.HttpStatus;
 public enum ReportError implements ErrorProperty {
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 유저를 찾을 수 없습니다."),
     REPORT_EXCEPTION(HttpStatus.BAD_REQUEST, "잘못된 신고입니다."),
-    IMAGE_NOT_IN(HttpStatus.BAD_REQUEST, "이미지를 보내지 않았습니다.");
+    REPORT_NOT_FOUND_EXCEPTION(HttpStatus.NOT_FOUND, "해당 신고를 찾을 수 없습니다."),
+    IMAGE_NOT_IN(HttpStatus.BAD_REQUEST, "이미지를 보내지 않았습니다."),
+    NO_ROLE_EXCEPTION(HttpStatus.FORBIDDEN, "권한이 없습니다.");
 
     private final HttpStatus status;
     private final String message;
