@@ -32,6 +32,7 @@ public class HttpSecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/api/v1/refresh").permitAll()
                         .requestMatchers("/api/v1/join", "/api/v1/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/report").permitAll()
                         .requestMatchers("/swagger-ui/*").permitAll()
                         .anyRequest().authenticated()
                 )

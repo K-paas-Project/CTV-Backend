@@ -39,12 +39,12 @@ public interface ReportService {
                 .build();
     }
 
-    default ReportDto requestToDto(ReportRequest request, UserEntity user, String url) {
+    default ReportDto requestToDto(ReportRequest request, String userName, String url) {
         return ReportDto.builder()
                 .category(request.category())
                 .title(request.title())
                 .content(request.content())
-                .reportUserName(user.getUserName())
+                .reportUserName(userName)
                 .reportOrganization("대기중") // 이거 수정 필요함
                 .location(request.location())
                 .imgUrl(url)

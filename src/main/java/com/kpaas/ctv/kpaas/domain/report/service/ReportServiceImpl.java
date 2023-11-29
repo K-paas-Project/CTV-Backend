@@ -37,20 +37,37 @@ public class ReportServiceImpl implements ReportService{
     @Override
     public ResponseEntity<BaseResponse> reportCreate(ReportRequest request, MultipartFile multipartFile, Authentication authentication) throws IOException {
         BaseResponse baseResponse = new BaseResponse();
-        if (multipartFile.isEmpty()) throw ReportException.notImageInFile();
+        if (authentication==null){ // 비회원 신고
+            if (multipartFile.isEmpty()) throw ReportException.notImageInFile();
 
-        String imgUrl = s3Uploader.upload(multipartFile, "images");
+            String imgUrl = s3Uploader.upload(multipartFile, "images");
 
-        String userAccount = authentication.getName();
-        UserEntity user = userRepository.findByUserAccount(userAccount).orElseThrow(ReportException::userNotFound);
+            ReportDto dto = requestToDto(request, "익명의 신고자", imgUrl);
 
-        ReportDto dto = requestToDto(request,user,imgUrl);
-        ReportEntity entity = dtoToEntity(dto);
+            ReportEntity entity = dtoToEntity(dto);
 
-        reportRepository.save(entity);
+            reportRepository.save(entity);
 
-        baseResponse.of(HttpStatus.OK, "신고 성공");
+            baseResponse.of(HttpStatus.OK, "신고 성공");
 
+        } else { // 회원 신고
+
+            if (multipartFile.isEmpty()) throw ReportException.notImageInFile();
+
+            String imgUrl = s3Uploader.upload(multipartFile, "images");
+
+            String userAccount = authentication.getName();
+            UserEntity user = userRepository.findByUserAccount(userAccount).orElseThrow(ReportException::userNotFound);
+
+            ReportDto dto = requestToDto(request, user.getUserName(), imgUrl);
+            ReportEntity entity = dtoToEntity(dto);
+
+            reportRepository.save(entity);
+
+            baseResponse.of(HttpStatus.OK, "신고 성공");
+
+
+        }
         return ResponseEntity.ok(baseResponse);
     }
 

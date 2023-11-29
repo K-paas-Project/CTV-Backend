@@ -4,6 +4,7 @@ import com.kpaas.ctv.kpaas.domain.report.dto.req.ReportFixRequest;
 import com.kpaas.ctv.kpaas.domain.report.dto.req.ReportRequest;
 import com.kpaas.ctv.kpaas.domain.report.service.ReportService;
 import com.kpaas.ctv.kpaas.global.common.dto.BaseResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -15,6 +16,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
+@Tag(name = "신고 요청 api", description = "신고 요청 관련 api 모음")
 public class ReportController {
     private final ReportService reportService;
     @PostMapping("/report")
