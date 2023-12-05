@@ -6,6 +6,7 @@ import com.kpaas.ctv.kpaas.domain.auth.dto.req.UserJoinRequest;
 import com.kpaas.ctv.kpaas.domain.auth.dto.req.UserLoginRequest;
 import com.kpaas.ctv.kpaas.domain.auth.dto.req.UserRefreshRequest;
 import com.kpaas.ctv.kpaas.domain.auth.dto.res.UserRefreshResponse;
+import com.kpaas.ctv.kpaas.domain.auth.dto.res.UserResponse;
 import com.kpaas.ctv.kpaas.domain.auth.exception.AuthErrorDuplicatedException;
 import com.kpaas.ctv.kpaas.domain.auth.exception.AuthErrorFailTokenException;
 import com.kpaas.ctv.kpaas.domain.auth.exception.AuthErrorNotFoundException;
@@ -17,12 +18,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -84,6 +87,15 @@ public class UserServiceImpl implements UserService{
         UserRefreshResponse userRefreshResponse = new UserRefreshResponse(newAccessToken);
         baseResponse.of(HttpStatus.OK, "토큰 생성 성공", userRefreshResponse);
 
+        return ResponseEntity.ok(baseResponse);
+    }
+
+    @Override
+    public ResponseEntity<BaseResponse> myProfile(Authentication authentication) {
+        BaseResponse baseResponse = new BaseResponse();
+        UserEntity user = userRepository.findByUserAccount(authentication.getName()).orElseThrow(() -> AuthErrorNotFoundException.EXCEPTION);
+        UserResponse userResponse = entityToRes(user);
+        baseResponse.of(HttpStatus.OK, "프로필 불러오기 성공", userResponse);
         return ResponseEntity.ok(baseResponse);
     }
 
