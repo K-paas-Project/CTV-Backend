@@ -5,6 +5,7 @@ import com.kpaas.ctv.kpaas.domain.auth.domain.repository.UserRepository;
 import com.kpaas.ctv.kpaas.domain.auth.dto.req.UserJoinRequest;
 import com.kpaas.ctv.kpaas.domain.auth.dto.req.UserLoginRequest;
 import com.kpaas.ctv.kpaas.domain.auth.dto.req.UserRefreshRequest;
+import com.kpaas.ctv.kpaas.domain.auth.dto.res.UserRefreshResponse;
 import com.kpaas.ctv.kpaas.domain.auth.exception.AuthErrorDuplicatedException;
 import com.kpaas.ctv.kpaas.domain.auth.exception.AuthErrorFailTokenException;
 import com.kpaas.ctv.kpaas.domain.auth.exception.AuthErrorNotFoundException;
@@ -74,12 +75,14 @@ public class UserServiceImpl implements UserService{
     public ResponseEntity<BaseResponse> refreshToAccessToken(UserRefreshRequest userRefreshRequest) {
         BaseResponse baseResponse = new BaseResponse();
         String refreshToken = userRefreshRequest.refreshToken();
-        if(refreshToken.isEmpty()) throw AuthErrorFailTokenException.EXCEPTION;
+        if(refreshToken == null || refreshToken.isEmpty()) throw AuthErrorFailTokenException.EXCEPTION;
 
         String newAccessToken = JwtTokenUtil.generateAccessTokenFromRefreshToken(refreshToken, secretKey);
-        if (newAccessToken.isEmpty()) throw AuthErrorFailTokenException.EXCEPTION;
 
-        baseResponse.of(HttpStatus.OK, "토큰 생성 성공", newAccessToken);
+        if (newAccessToken == null || newAccessToken.isEmpty()) throw AuthErrorFailTokenException.EXCEPTION;
+
+        UserRefreshResponse userRefreshResponse = new UserRefreshResponse(newAccessToken);
+        baseResponse.of(HttpStatus.OK, "토큰 생성 성공", userRefreshResponse);
 
         return ResponseEntity.ok(baseResponse);
     }
