@@ -4,11 +4,14 @@ import com.kpaas.ctv.kpaas.domain.auth.domain.UserEntity;
 import com.kpaas.ctv.kpaas.domain.auth.domain.repository.UserRepository;
 import com.kpaas.ctv.kpaas.domain.auth.dto.req.UserJoinRequest;
 import com.kpaas.ctv.kpaas.domain.auth.dto.req.UserLoginRequest;
+import com.kpaas.ctv.kpaas.domain.auth.dto.req.UserRefreshRequest;
 import com.kpaas.ctv.kpaas.domain.auth.exception.AuthErrorDuplicatedException;
+import com.kpaas.ctv.kpaas.domain.auth.exception.AuthErrorFailTokenException;
 import com.kpaas.ctv.kpaas.domain.auth.exception.AuthErrorNotFoundException;
 import com.kpaas.ctv.kpaas.domain.auth.exception.AuthErrorNotInIdOrPwException;
 import com.kpaas.ctv.kpaas.global.common.dto.BaseResponse;
 import com.kpaas.ctv.kpaas.global.filter.JwtTokenUtil;
+import io.jsonwebtoken.Jwt;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -63,6 +66,20 @@ public class UserServiceImpl implements UserService{
         tokens.put("refreshToken", JwtTokenUtil.createRefreshToken(user.getUserAccount(), secretKey));
 
         baseResponse.of(HttpStatus.OK, "로그인 성공", tokens);
+
+        return ResponseEntity.ok(baseResponse);
+    }
+
+    @Override
+    public ResponseEntity<BaseResponse> refreshToAccessToken(UserRefreshRequest userRefreshRequest) {
+        BaseResponse baseResponse = new BaseResponse();
+        String refreshToken = userRefreshRequest.refreshToken();
+        if(refreshToken.isEmpty()) throw AuthErrorFailTokenException.EXCEPTION;
+
+        String newAccessToken = JwtTokenUtil.generateAccessTokenFromRefreshToken(refreshToken, secretKey);
+        if (newAccessToken.isEmpty()) throw AuthErrorFailTokenException.EXCEPTION;
+
+        baseResponse.of(HttpStatus.OK, "토큰 생성 성공", newAccessToken);
 
         return ResponseEntity.ok(baseResponse);
     }

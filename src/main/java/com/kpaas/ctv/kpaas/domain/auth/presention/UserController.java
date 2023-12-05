@@ -2,6 +2,7 @@ package com.kpaas.ctv.kpaas.domain.auth.presention;
 
 import com.kpaas.ctv.kpaas.domain.auth.dto.req.UserJoinRequest;
 import com.kpaas.ctv.kpaas.domain.auth.dto.req.UserLoginRequest;
+import com.kpaas.ctv.kpaas.domain.auth.dto.req.UserRefreshRequest;
 import com.kpaas.ctv.kpaas.domain.auth.service.UserService;
 import com.kpaas.ctv.kpaas.global.common.dto.BaseResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,6 +28,11 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<BaseResponse> login(@RequestBody UserLoginRequest userLoginRequest){
         return userService.login(userLoginRequest);
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<BaseResponse> refreshToAccessToken(@RequestBody UserRefreshRequest userRefreshRequest){
+        return userService.refreshToAccessToken(userRefreshRequest);
     }
 
 }
