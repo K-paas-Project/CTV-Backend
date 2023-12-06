@@ -12,8 +12,7 @@ import com.kpaas.ctv.kpaas.domain.auth.exception.AuthErrorFailTokenException;
 import com.kpaas.ctv.kpaas.domain.auth.exception.AuthErrorNotFoundException;
 import com.kpaas.ctv.kpaas.domain.auth.exception.AuthErrorNotInIdOrPwException;
 import com.kpaas.ctv.kpaas.global.common.dto.BaseResponse;
-import com.kpaas.ctv.kpaas.global.filter.JwtTokenUtil;
-import io.jsonwebtoken.Jwt;
+import com.kpaas.ctv.kpaas.global.filter.jwt.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -21,11 +20,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

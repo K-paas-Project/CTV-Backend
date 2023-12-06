@@ -1,4 +1,4 @@
-package com.kpaas.ctv.kpaas.global.filter;
+package com.kpaas.ctv.kpaas.global.filter.jwt;
 
 import com.kpaas.ctv.kpaas.global.exception.JwtException;
 import io.jsonwebtoken.*;

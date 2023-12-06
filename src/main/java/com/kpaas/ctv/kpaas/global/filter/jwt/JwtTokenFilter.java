@@ -1,4 +1,4 @@
-package com.kpaas.ctv.kpaas.global.filter;
+package com.kpaas.ctv.kpaas.global.filter.jwt;
 
 import com.kpaas.ctv.kpaas.domain.auth.domain.UserEntity;
 import com.kpaas.ctv.kpaas.domain.auth.service.UserService;

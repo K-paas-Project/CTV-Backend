@@ -1,7 +1,7 @@
 package com.kpaas.ctv.kpaas.global.config;
 
 import com.kpaas.ctv.kpaas.domain.auth.service.UserServiceImpl;
-import com.kpaas.ctv.kpaas.global.filter.JwtTokenFilter;
+import com.kpaas.ctv.kpaas.global.filter.jwt.JwtTokenFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
