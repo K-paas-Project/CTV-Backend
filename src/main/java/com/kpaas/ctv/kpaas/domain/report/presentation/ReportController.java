@@ -17,6 +17,7 @@ import java.io.IOException;
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
 @Tag(name = "신고 요청 api", description = "신고 요청 관련 api 모음")
+@CrossOrigin(origins = {"http://localhost:3000"})
 public class ReportController {
     private final ReportService reportService;
     @PostMapping("/report")
