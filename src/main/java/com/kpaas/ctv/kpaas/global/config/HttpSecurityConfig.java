@@ -30,6 +30,7 @@ public class HttpSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/refresh").permitAll()
                         .requestMatchers("/api/v1/join", "/api/v1/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/report").permitAll()
