@@ -6,6 +6,7 @@ import com.kpaas.ctv.kpaas.global.exception.JwtException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -48,12 +49,14 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
-            } catch (JwtException jwtException) {
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, jwtException.getMessage());
-                return;
+            } catch (MalformedJwtException e) {
+                throw JwtException.JWT_NOT_FOUND_EXCEPTION;
+            } catch (ExpiredJwtException e) {//유효 기간이 지난 JWT를 수신한 경우
+                throw JwtException.JWT_IS_EXPIRED;
+            } catch(Exception e) {
+                SecurityContextHolder.clearContext();
             }
         }
-
         filterChain.doFilter(request, response);
     }
 
